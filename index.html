@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>المساعد الذكي للمبادرات والمنصات الرقمية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+    
+    <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Tahoma, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f3f4f6;
+      color: rgb(17, 24, 39);
+    }
+
+    .app-container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-header {
+      background: linear-gradient(135deg, #25CC96, #191359);
+      color: white;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .app-header h1 {
+      margin: 0 0 0.25rem;
+      font-size: 1.5rem;
+    }
+
+    .app-header p {
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    .app-main {
+      flex: 1;
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 1.5rem 1.5rem;
+    }
+
+    .sidebar {
+      width: 280px;
+      background: white;
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 140px);
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+    }
+
+    #searchInput {
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 0.75rem;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      outline: none;
+    }
+
+    #searchInput:focus {
+      border-color: #0f766e;
+    }
+
+    #platformList {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      overflow-y: auto;
+    }
+
+    #platformList li {
+      padding: 0.6rem 0.75rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      border: 1px solid transparent;
+      margin-bottom: 0.4rem;
+    }
+
+    #platformList li:hover {
+      background: #f1f5f9;
+    }
+
+    #platformList li.active {
+      background: #ecfeff;
+      border-color: #06b6d4;
+    }
+
+    #platformList .platform-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    #platformList .platform-tag {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .content {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 1rem;
+    }
+
+    .platform-details {
+      background: white;
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+      max-height: calc(100vh - 140px);
+      overflow-y: auto;
+    }
+
+    .platform-details h2 {
+      margin-top: 0;
+    }
+
+    .platform-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: #ecfeff;
+      color: #0f766e;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-top: 0.75rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+
+    .tag-list span {
+      background: #f3f4f6;
+      border-radius: 999px;
+      padding: 0.15rem 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .images-grid img {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 0.75rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .chat-container {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100vh - 140px);
+    }
+
+    .chat-header {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .chat-header h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 0.75rem;
+      overflow-y: auto;
+      background: #f9fafb;
+    }
+
+    .message {
+      max-width: 90%;
+      padding: 0.5rem 0.75rem;
+      margin-bottom: 0.4rem;
+      border-radius: 0.75rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .message.bot {
+      background: #e0f2fe;
+      align-self: flex-start;
+    }
+
+    .message.user {
+      background: #dcfce7;
+      align-self: flex-end;
+    }
+
+    .chat-input {
+      padding: 0.6rem;
+      border-top: 1px solid #e5e7eb;
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 0.4rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      outline: none;
+    }
+
+    .chat-input input:focus {
+      border-color: #0f766e;
+    }
+
+    .chat-input button {
+      border: none;
+      border-radius: 999px;
+      padding: 0 1rem;
+      cursor: pointer;
+      background: #0f766e;
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    .placeholder {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #6b7280;
+    }
+
+    .app-footer {
+      padding: 0.6rem 1.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6b7280;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    @media (max-width: 900px) {
+      .app-main {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        max-height: unset;
+      }
+
+      .content {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+    
+    
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div>
+        <h1>المساعد الذكي للمبادرات والمنصات الرقمية</h1>
+        <p>استعرض المنصات الرقمية، تعرّف على أهدافها، وشاهد صورها في واجهة واحدة.</p>
+        <p> تعرّف كيف تساهم المنصات الرقمية في تحسين كفاءة الانفاق وترشيد النفقات</p>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <!-- قائمة المنصات -->
+      <aside class="sidebar">
+        <h2>المنصات والمبادرات</h2>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="ابحث عن منصة رقمية..."
+        />
+        <ul id="platformList"></ul>
+      </aside>
+
+      <!-- منطقة المحتوى والبوت -->
+      <section class="content">
+        <div class="platform-details" id="platformDetails">
+          <div class="placeholder">
+            <h2>مرحبًا 👋</h2>
+            <p>اختر منصة من القائمة لمعرفة التفاصيل عنها.</p>
+          </div>
+        </div>
+
+        <div class="chat-container">
+          <div class="chat-header">
+            <h3>محادثة مع المساعد الذكي</h3>
+          </div>
+          <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+              أهلاً بك 👋 اختر منصة من القائمة، أو اكتب سؤالك عن أي منصة رقمية.
+            </div>
+          </div>
+          <div class="chat-input">
+            <input
+              type="text"
+              id="userInput"
+              placeholder="اكتب سؤالك هنا..."
+            />
+            <button id="sendBtn">إرسال</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <span>الإدارة العامة للعمليات الرقمية وتشغيل بلدي</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
