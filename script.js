@@ -259,7 +259,7 @@ function handleUserMessage() {
       `أبرز المزايا في منصة <strong>${selectedPlatform.name}</strong>:<br>- ${selectedPlatform.features.join(
         "<br>- "
       )}`
-    );
+        );
   } else if (
     lower.includes("مؤشر") ||
     lower.includes("kpi") ||
@@ -291,24 +291,25 @@ function handleUserMessage() {
   }
 }
 
-// ربط الأحداث (مع حماية لو العنصر ماله وجود)
-if (searchInput) {
-  searchInput.addEventListener("input", (e) =>
-    renderPlatformList(e.target.value)
-  );
-}
+// ربط الأحداث بعد تحميل الـ DOM
+document.addEventListener("DOMContentLoaded", () => {
+  renderPlatformList();
 
-if (sendBtn) {
-  sendBtn.addEventListener("click", handleUserMessage);
-}
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) =>
+      renderPlatformList(e.target.value)
+    );
+  }
 
-if (userInput) {
-  userInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      handleUserMessage();
-    }
-  });
-}
+  if (sendBtn) {
+    sendBtn.addEventListener("click", handleUserMessage);
+  }
 
-// تشغيل أولي
-renderPlatformList();
+  if (userInput) {
+    userInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        handleUserMessage();
+      }
+    });
+  }
+});
