@@ -261,9 +261,20 @@ function handleUserMessage() {
       )}`
         );
   } else if (
-    lower.includes("مؤشر") ||
-    lower.includes("kpi") ||
-    lower.includes("الأداء")
+    lower.includes("تحقيق كفاءة انفاق") ||
+    lower.includes("ترشيد") ||
+    lower.includes("الميزة") ||
+    lower.includes("المالية") ||
+    lower.includes("وفرة") ||
+    lower.includes("وفيره") ||
+    lower.includes("توفير") ||
+    lower.includes("الانفاق") ||
+    lower.includes("الإنفاق") ||
+    lower.includes("الأنفاق") ||
+    lower.includes("انفاق")  ||
+    lower.includes("إنفاق") ||
+    lower.includes("أنفاق") ||
+
   ) {
     botReply(
       `مؤشرات الأداء المرتبطة بمنصة <strong>${selectedPlatform.name}</strong>:<br>- ${selectedPlatform.kpis.join(
@@ -313,3 +324,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
